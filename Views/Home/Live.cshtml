@@ -1,0 +1,138 @@
+﻿@model OnMatch.Models.Match
+@{
+    ViewData["Title"] = "Live";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row ">
+
+    <!-- Area Chart -->
+    <div  class=" col-xl-10 col-lg-10 ml-auto mr-auto">
+
+        <div class="card shadow mb-4 bg-light ">
+
+            <!-- Card Header - Dropdown -->
+            <!-- Card Body -->
+            <div class="card-body">
+
+
+                <div class="row">
+                    <div class="w-25" style="text-align:center;">
+
+                        @if (Model.club1.Img == null)
+                        {
+                            <img src="~/vendor/download.png" class="d-block ui-w-40 rounded-circle ml-auto mr-auto" alt="">
+                        }
+                        else
+                        {
+
+                            var Userbase64 = Convert.ToBase64String(Model.club1.Img);
+                            var UserimgSrc = String.Format("data:image/png;base64,{0}", Userbase64);
+                            <img src="@UserimgSrc" class="d-block w-auto rounded-circle ml-auto mr-auto" style="height:3rem" alt="">
+                        }
+                        <h4>
+                            @Model.club1.Name
+                        </h4>
+
+                    </div>
+                    <div class="w-50">
+                        <div style="text-align:center;">
+                            <span class="mr-auto ml-auto">
+                                @Model.league.Name
+                            </span>
+                            <div class="row">
+                                @if (Model.date != DateTime.Now)
+                                {
+                                    <span class="w-50" style="font-weight:bold">-</span>
+                                    <span class="w-50" style="font-weight:bold">-</span>
+                                }
+                                else
+                                {
+                                    <span class="w-50">@Model.result1</span>
+                                    <span class="w-50">@Model.result2</span>
+                                }
+                            </div>
+                            <div>
+                                @if (Model.date != DateTime.Now)
+                                {
+                                    <span>لم تبدأ بعد</span>
+
+                                }
+                                else
+                                {
+
+                                    <span class="w-50">! مباشر</span>
+                                }
+                            </div>
+                            <span class="mr-auto ml-auto">
+                                @Model.date.Hour:@Model.date.Minute.ToString()
+                            </span>
+                        </div>
+                    </div>
+                    <div class="w-25" style="text-align:center;">
+
+                        @if (Model.club2.Img == null)
+                        {
+                            <img src="~/vendor/download.png" class="d-block ui-w-40 rounded-circle ml-auto mr-auto" alt="">
+                        }
+                        else
+                        {
+
+                            var Userbase64 = Convert.ToBase64String(Model.club2.Img);
+                            var UserimgSrc = String.Format("data:image/png;base64,{0}", Userbase64);
+                            <img src="@UserimgSrc" class="d-block w-auto rounded-circle ml-auto mr-auto" style="height:3rem" alt="">
+                        }
+                        <h4>
+                            @Model.club2.Name
+                        </h4>
+
+                    </div>
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+
+        <div class="bg-light card" dir="rtl">
+            <p dir="rtl">
+                لمتابعه مباراه <span>@Model.club2.Name</span> و <span>@Model.club1.Name</span> علي ملعب <span>@Model.stadium</span> في تمام الساعه <span>@Model.date.Hour:@Model.date.Minute.ToString()</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Pie Chart -->
+
+</div>
+
+
+    
+
+
+    
+<div class="row mb-5 mt-3">
+    @for (var link = 1; Model.serverName.serverLinks.Count > link - 1; link++)
+    {
+        <a href="javascript:void(0)" class="link w-auto mr-auto ml-auto linkClick" data="@Model.serverName.serverLinks[link-1].Link" style="display:inline;"><span class="label-photo link">Link @link</span></a>
+    }
+</div>
+<div class="row" style="height:30rem;">
+    <!-- Area Chart -->
+    <div class=" col-xl-10 col-lg-10 ml-auto mr-auto">
+        <iframe class="w-100 h-100 changeIframe" src="@Model.serverName.serverLinks[0].Link"></iframe>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".linkClick").on("click", function () {
+                $('.changeIframe').attr('src', $(this).attr("data"))
+            });
+            
+        });
+    </script>
+}

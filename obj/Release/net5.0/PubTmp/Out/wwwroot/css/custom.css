@@ -1,0 +1,51 @@
+#lightSwitch {
+    transform: scale(1.8);
+  }
+
+.border-radius-lg {
+    border-radius: 0.75rem;
+}
+
+.change-photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+    .change-photo > * {
+        transform: translateY(1.25rem);
+        transition: transform 0.8s ease;
+    }
+
+    .change-photo:hover {
+        opacity: 1;
+    }
+
+        .change-photo:hover > * {
+            transform: translateY(0);
+        }
+.label-photo {
+    border: 1px solid wheat;
+    text-decoration: none;
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.link {
+    color: wheat
+}
+
+    .link:hover {
+        color: wheat
+    }

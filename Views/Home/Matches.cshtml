@@ -1,0 +1,202 @@
+﻿@model IEnumerable<OnMatch.Models.Match>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
+    ViewData["Title"] = "Matches";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var now = DateTime.Now.AddHours(1.5).AddMinutes(15);
+    DateTime date = DateTime.Parse(ViewBag.date);
+}
+
+
+
+<div class="row ">
+
+    <!-- Area Chart -->
+    <div class=" col-xl-10 col-lg-10 ml-auto mr-auto ">
+
+
+        <div class="row mb-3">
+            <div class="card bg-light shadow mr-auto" style="width:5%;text-align:center;">
+                <a class="active" style="text-decoration:none;" asp-controller="Home" asp-action="Matches" asp-route-id="@date.AddDays(1).ToString("MM-dd-yyyy")">
+
+
+
+                    غدا
+
+                </a>
+            </div>
+
+            <div class="card bg-light shadow ml-auto" style="width:7%;text-align:center;">
+                <a class="active" style="text-decoration:none;" asp-controller="Home" asp-action="Matches" asp-route-id="@date.AddDays(-1).ToString("MM-dd-yyyy")">
+
+
+
+                    امس
+
+                </a>
+            </div>
+        </div>
+
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <div class="card shadow mb-4 bg-light ">
+
+                    <!-- Card Header - Dropdown -->
+                    <!-- Card Body -->
+                    <div class="card-body">
+
+
+                        <div class="row">
+                            <div class="w-25" style="text-align:center;">
+
+                                @if (item.club1.Img == null)
+                                {
+                                    <img src="~/vendor/download.png" class="d-block ui-w-40 rounded-circle ml-auto mr-auto" alt="">
+                                }
+                                else
+                                {
+
+                                    var Userbase64 = Convert.ToBase64String(item.club1.Img);
+                                    var UserimgSrc = String.Format("data:image/png;base64,{0}", Userbase64);
+                                    <img src="@UserimgSrc" class="d-block w-auto rounded-circle ml-auto mr-auto" style="height:3rem" alt="">
+                                }
+                                <h4>
+                                    @item.club1.Name
+                                </h4>
+
+                            </div>
+                            <div class="w-50">
+                                <div style="text-align:center;">
+                                    <span class="mr-auto ml-auto">
+                                        @item.league.Name
+                                    </span>
+                                    <div class="row">
+                                        @if (item.date >= DateTime.Now)
+                                        {
+                                            <span class="w-50" style="font-weight:bold">-</span>
+                                            <span class="w-50" style="font-weight:bold">-</span>
+                                        }
+
+                                        else
+                                        {
+                                            <span class="w-50">@item.result1</span>
+                                            <span class="w-50">@item.result2</span>
+                                        }
+                                    </div>
+                                    <div>
+                                        @if (item.date == DateTime.Now || item.date < now)
+                                        {
+                                            <span class="w-50">! مباشر</span>
+
+                                        }
+                                        else if (item.date < DateTime.Now)
+                                        {
+                                            <span class="w-50">! انتهت</span>
+                                        }
+                                        else
+                                        {
+                                            <span>لم تبدأ بعد</span>
+                                        }
+                                    </div>
+                                    <span class="mr-auto ml-auto">
+                                        @item.date.Hour:@item.date.Minute.ToString()
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="w-25" style="text-align:center;">
+
+                                @if (item.club2.Img == null)
+                                {
+                                    <img src="~/vendor/download.png" class="d-block ui-w-40 rounded-circle ml-auto mr-auto" alt="">
+                                }
+                                else
+                                {
+
+                                    var Userbase64 = Convert.ToBase64String(item.club2.Img);
+                                    var UserimgSrc = String.Format("data:image/png;base64,{0}", Userbase64);
+                                    <img src="@UserimgSrc" class="d-block w-auto rounded-circle ml-auto mr-auto" style="height:3rem" alt="">
+                                }
+                                <h4>
+                                    @item.club2.Name
+                                </h4>
+
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="border-radius-lg change-photo h-100" style="display:flex;">
+
+                            <a class="w-100 link" style="text-align:center;" asp-action="Live" asp-route-id="@item.Id"><span class="label-photo link">Live</span></a>
+
+
+                        </div>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <div class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"><i class="fas fa-ellipsis-h "></i></span>
+
+                                </a>
+
+                                <div class="  dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                     aria-labelledby="userDropdown">
+
+                                    <a class="dropdown-item " asp-controller="Manage" asp-action="EditMatch" asp-route-id="@item.Id">
+
+                                        <i class="fas fa-edit fa-sm fa-fw mr-2 "></i>
+                                        <span>Edit</span>
+
+                                    </a>
+                                    <a class="dropdown-item js-delete " href="javascript:;" data-id="@item.Id">
+                                        <i class="fas fa-solid fa-trash fa-sm fa-fw mr-2 "></i>
+                                        <span>Delete</span>
+                                    </a>
+
+                                </div>
+
+
+                                <!-- Dropdown - User Information -->
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+
+    <!-- Pie Chart -->
+
+</div>
+
+@section Scripts{ 
+<script>
+    $(".js-delete").on("click", function () {
+        var btn = $(this);
+        alert("dcddc");
+       
+        $.ajax({
+            url: "/api/Match/?id=" + btn.data("id"),
+            method: "DELETE",
+            success: function () {
+                let text = document.getElementsByClassName("card");
+                btn.parentsUntil(text).fadeOut();
+            },
+            error: function () {
+                alert("error happend");
+            }
+        });
+        
+    });
+</script>
+}

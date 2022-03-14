@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAtbb/4FTOMky+0JY+BkhH7QAAAAACAAAAAAAQZgAAAAEAACAAAADni2DZRJVMTMIM/wC5n8CA+t7fhetkgYMIwzyIbxADYwAAAAAOgAAAAAIAACAAAAAg8ZeXMIvzEcZEH+SHAqcd09HC7faSlQpx55mVM1W1KyAAAADW2g61lrIeVQdXIi/YPP5KZ/0X2FNmCM1gqsfuMfJ+W0AAAAAtBYPzxf0X7ek8Uorhk2d4NFT3uolyGIB3m6JNuDy0rw7ByVfrauztSm4eoZXwQbPy5UZpeHcQ2O6tdeTOtHZI</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Server=SQL5079.site4now.net%3bDatabase=db_a8403a_abdooahmed%3bUser Id=db_a8403a_abdooahmed_admin%3bPassword=Samara24121977</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="OnMatch.Data.ApplicationDbContext">
+      <Value>Server=SQL5079.site4now.net%3bDatabase=db_a8403a_abdooahmed%3bUser Id=db_a8403a_abdooahmed_admin%3bPassword=Samara24121977</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>
